@@ -75,7 +75,7 @@ for(int i=0;i<m;i++)
 }
 int mx=0;
 
-for(int i=1;i<=m;i++)
+for(int i=1;i<=n;i++)
 {
     if(!vis[i])
     mx=max(mx,dfs(i));
@@ -83,7 +83,7 @@ for(int i=1;i<=m;i++)
 
 cout<<mx<<el;
 
-for(int i=1;i<=m;i++)
+for(int i=1;i<=n;i++)
 {
     g[i].clear();
     vis[i]=0;
