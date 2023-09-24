@@ -1,0 +1,119 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+#define pb push_back
+
+#define ld long double
+#define sz(x) (int)x.size()
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define RT(x) return cout << x, 0
+#define pi 3.1415926535897932384626433
+#define outf(x) cout << fixed << setprecision(x)
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define el '\n'
+#define yes cout << "YES" << endl;
+#define no cout << "NO" << endl;
+constexpr ll OO = 0x3f3f3f3f3f3f3f3f;
+const int MOD =  1073741824;
+const int N = 10001;
+
+
+vector<int>g[N];
+
+int vis[N];
+int col[N];
+
+bool sp;
+
+
+bool dfs(int u,int ec)
+{
+     col[u]=ec;
+     vis[u]=1;
+
+
+    for(int v:g[u])
+    {
+        if(vis[v]==0)
+        {
+         if(dfs(v,ec==1?2:1)==false)
+            return false;
+        }
+         if(col[u]==col[v])
+        {
+            return false;
+        }
+    }
+    return true;
+
+
+}
+
+void solve()
+{
+
+int n,m;
+int T;cin>>T;
+for(int t=0;t<T;t++){
+cin>>n>>m;
+
+
+
+for(int i=0;i<m;i++)
+{
+    int u,v;cin>>u>>v;
+    g[v].push_back(u);
+    g[u].push_back(v);
+}
+
+
+bool ok;
+for(int i=1;i<=n;i++)
+{
+    if(not vis[i])
+    {
+       ok=dfs(i,1);
+    }
+    if(!ok)
+        break;
+}
+
+cout<<"Scenario #"<<t+1<<":"<<el;
+if(!ok)
+    cout<<"Suspicious bugs found!"<<el;
+else
+    cout<<"No suspicious bugs found!"<<el;
+
+
+for(int i=1;i<=n;i++)
+{
+    g[i].clear();
+    vis[i]=0;
+    col[i]=0;
+
+}
+
+
+}
+
+
+
+}
+
+int main()
+{
+    fast
+
+    ll t=1;
+   // cin>>t;
+    while(t--)
+    {
+        solve();
+      // cout<<el;
+
+    }
+
+}
