@@ -1,0 +1,149 @@
+// link :  https://www.spoj.com/problems/BLINNET/
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+#define pb push_back
+
+#define ld long double
+#define sz(x) (int)x.size()
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define RT(x) return cout << x, 0
+#define pi 3.1415926535897932384626433
+#define outf(x) cout << fixed << setprecision(x)
+#define fast ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define el '\n'
+#define si(t) scanf("%d",&t)
+#define yes cout << "YES" << endl;
+#define no cout << "NO" << endl;
+constexpr ll OO = 0x3f3f3f3f3f3f3f3f;
+const int MOD =  1073741824;
+const int N = 1e5+5;
+
+
+vector<int>g[N];
+
+bool vis[N];
+
+
+//int dis[N][N];
+
+
+int d[8][2]=
+{
+    {0,1},
+    {0,-1},
+    {1,0},
+    {-1,0},
+
+    {1,1},
+    {-1,1},
+    {1,-1},
+    {-1,-1},
+
+
+};
+int parent[N],sizee[N];
+
+void init()
+{
+    iota(parent,parent+N+1,0);
+    fill(sizee,sizee+N+1,1);
+
+}
+
+int find_set(int v)
+{
+      if (v == parent[v])
+        return v;
+    return parent[v]=find_set(parent[v]);
+}
+
+
+void union_sets(int a, int b) {
+    a = find_set(a);
+    b = find_set(b);
+    if (a != b) {
+        if (sizee[a] < sizee[b])
+            swap(a, b);
+        parent[b] = a;
+        sizee[a] += sizee[b];
+    }
+}
+
+vector<pair<int,pair<int,int>>>edges;
+
+ll kruskalmst()
+{
+    sort(all(edges));
+
+    ll cost=0;
+
+    for(int i=0;i<edges.size();i++)
+    {
+        int u=edges[i].second.first;
+        int v=edges[i].second.second;
+        int c=edges[i].first;
+
+        if(find_set(u)!=find_set(v))
+        {
+            cost+=c;
+            union_sets(u,v);
+        }
+    }
+    return cost;
+}
+
+void solve() {
+
+int t;cin>>t;
+while(t--){
+int n,m;
+
+cin>>n;
+init();
+
+for(int i=1;i<=n;i++)
+{
+    string s;cin>>s;
+    int k;cin>>k;
+    while(k--)
+    {
+        int v,cost;cin>>v>>cost;
+        edges.push_back({cost,{i,v}});
+    }
+}
+
+
+cout<<kruskalmst()<<el;
+edges.clear();
+
+}
+
+
+
+
+}
+
+
+
+
+int main()
+{
+   // fast
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
+    ll t=1;
+     //cin>>t;
+    while(t--)
+    {
+        solve();
+        // cout<<el;
+
+    }
+
+}
